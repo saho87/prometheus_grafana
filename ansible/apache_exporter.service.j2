@@ -1,0 +1,10 @@
+[Unit]
+Description=Apache2 Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=/opt/apache_exporter/apache_exporter
+
+[Install]
+WantedBy=default.target

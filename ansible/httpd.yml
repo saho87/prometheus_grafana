@@ -1,0 +1,54 @@
+---
+- name: Install and configure Apache HTTP Server
+  hosts: ubuntu
+  become: true
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Apache HTTP Server
+      apt:
+        name: apache2
+        state: present
+
+    - name: Start and enable Apache service
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    # Apache Exporter
+    
+    - name: Download Apache2 Exporter
+      get_url:
+        url: https://github.com/Lusitaniae/apache_exporter/releases/download/v0.8.0/apache_exporter-0.8.0.linux-amd64.tar.gz
+        dest: /tmp/apache_exporter.tar.gz
+
+    - name: Extract Apache2 Exporter
+      unarchive:
+        src: /tmp/apache_exporter.tar.gz
+        dest: /opt/
+        remote_src: yes
+        creates: /opt/apache_exporter-0.8.0.linux-amd64
+
+    - name: Create symlink for Apache2 Exporter
+      file:
+        src: /opt/apache_exporter-0.8.0.linux-amd64
+        dest: /opt/apache_exporter
+        state: link
+
+    - name: Create Apache2 Exporter systemd service
+      template:
+        src: apache_exporter.service.j2
+        dest: /etc/systemd/system/apache_exporter.service
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Start and enable Apache2 Exporter service
+      systemd:
+        name: apache_exporter
+        state: started
+        enabled: yes
+    

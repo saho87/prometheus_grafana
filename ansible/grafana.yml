@@ -1,0 +1,4 @@
+---
+- hosts: grafana
+  collections:
+    - community.grafana

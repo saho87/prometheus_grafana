@@ -1,1 +1,10 @@
 Prometheus and Grafana
+
+Install grafana:
+
+https://grafana.com/docs/grafana/latest/setup-grafana/installation/redhat-rhel-fedora/
+
+1. Import the GPG key - hat nicht funktioniert
+2. Create /etc/yum.repos.d/grafana.repo with the following content - hat funktioniert
+3. Install sudo sudo yum install grafana
+4. Service starten: systemctl start grafana-server.service

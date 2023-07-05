@@ -1,0 +1,23 @@
+[centos1]
+192.168.60.97
+
+[centos2]
+192.168.60.98
+
+[grafana]
+192.168.60.100
+
+[ubuntu]
+192.168.60.99
+
+# group has all the servers
+[multi:children]
+centos1
+centos2
+ubuntu
+grafana
+
+# Variables for all the servers
+[multi:vars]
+ansible_user=vagrant
+ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key

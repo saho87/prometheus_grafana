@@ -1,0 +1,7 @@
+---
+- hosts: centos2, ubuntu
+  roles:
+    - prometheus.prometheus.node_exporter
+  tasks:
+    - name: Test
+      shell: echo "Diese Aufgabe wird von der Ansible-Galaxie ausgeführt."
